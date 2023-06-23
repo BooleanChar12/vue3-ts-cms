@@ -59,11 +59,12 @@ class BCRequest {
         this.loading?.close() // 关闭loading动画
         console.log('所有的实例都有的拦截器：响应成功拦截')
         const data = res.data
-        if (data.returnCode === '-1001') {
-          console.log('请求失败~，错误信息')
-        } else {
-          return data
-        }
+        // if (data.returnCode === '-1001') {
+        //   console.log('请求失败~，错误信息')
+        // } else {
+        //   return data
+        // }
+        return data
       },
       (err) => {
         console.log('所有的实例都有的拦截器：响应失败拦截')
@@ -78,7 +79,7 @@ class BCRequest {
   }
 
   // 封装各种请求
-  request<T>(config: BCRequestConfig): Promise<T> {
+  request<T>(config: BCRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       // 1.单个请求config处理
       if (config.interceptors?.requestInterceptor) {
@@ -111,19 +112,19 @@ class BCRequest {
     })
   }
 
-  get<T>(config: BCRequestConfig): Promise<T> {
+  get<T>(config: BCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'GET' })
   }
 
-  post<T>(config: BCRequestConfig): Promise<T> {
+  post<T>(config: BCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
 
-  delete<T>(config: BCRequestConfig): Promise<T> {
+  delete<T>(config: BCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
 
-  patch<T>(config: BCRequestConfig): Promise<T> {
+  patch<T>(config: BCRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
