@@ -6,13 +6,14 @@ import store from './store'
 import { globalRegister } from './global'
 import 'normalize.css'
 import './assets/css/index.less'
-
+import { setupStore } from './store'
 // import './service/axios_demo'
-import bcRequest from './service'
+// import bcRequest from './service'
 
 const app = createApp(App)
 app.use(router)
 app.use(store)
+setupStore()
 app.use(globalRegister) // 会自动执行函数globalRegister()
 
 app.mount('#app')
