@@ -2,11 +2,11 @@ import { Module } from 'vuex'
 import router from '@/router/index'
 import { ILoginState } from './types'
 import { IRootState } from '../types'
-import {
-  accountLoginRequest,
-  requestUserInfoById,
-  requestUserMenusByRoleId
-} from '@/service/login/login'
+// import {
+//   accountLoginRequest,
+//   requestUserInfoById,
+//   requestUserMenusByRoleId
+// } from '@/service/login/login'
 import { IAccount } from '@/service/login/type'
 import localCache from '@/utils/cache'
 
