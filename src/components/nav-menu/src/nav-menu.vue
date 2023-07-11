@@ -2,10 +2,14 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span class="title">Vue3 + TS</span>
+      <span v-if="!collapse" class="title">Vue3 + TS</span>
     </div>
     <!-- 动态菜单 -->
-    <el-menu default-active="2" class="el-menu-vertical-demo">
+    <el-menu
+      default-active="2"
+      class="el-menu-vertical-demo"
+      :collapse="collapse"
+    >
       <template v-for="item in userMenus" :key="item.id">
         <!-- 二级菜单 -->
         <template v-if="item.type === 1">
@@ -17,19 +21,19 @@
             </template>
             <!-- 遍历二级菜单内部的item -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-item-item :index="subitem.id">
+              <el-menu-item :index="subitem.id">
                 <i v-if="subitem.icon" :class="subitem.icon"></i>
                 <span>{{ subitem.name }}</span>
-              </el-item-item>
+              </el-menu-item>
             </template>
           </el-sub-menu>
         </template>
         <!-- 一级菜单 -->
         <template v-else-if="item.type === 2">
-          <el-item-item :index="item.id">
+          <el-menu-item :index="item.id">
             <i v-if="item.icon" :class="item.icon"></i>
             <span>{{ item.name }}</span>
-          </el-item-item>
+          </el-menu-item>
         </template>
       </template>
     </el-menu>
@@ -42,8 +46,7 @@
       class="el-menu-vertical-demo"
       default-active="2"
       text-color="#fff"
-      @open="handleOpen"
-      @close="handleClose"
+      :collapse="collapse"
     >
       <el-sub-menu index="1">
         <template #title>
@@ -74,8 +77,8 @@
           <el-icon><ChatDotRound /></el-icon>
           <span>随便聊聊</span>
         </template>
-        <el-menu-item index="3-1">核心技术</el-menu-item>
-        <el-menu-item index="3-2">商品统计</el-menu-item>
+        <el-menu-item index="4-1">核心技术</el-menu-item>
+        <el-menu-item index="4-2">商品统计</el-menu-item>
       </el-sub-menu>
     </el-menu>
   </div>
@@ -86,6 +89,12 @@ import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
 
 export default defineComponent({
+  props: {
+    collapse: {
+      type: Boolean,
+      default: false
+    }
+  },
   setup() {
     const store = useStore()
     const userMenus = computed(() => store.state.login.userMenus)
