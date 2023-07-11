@@ -8,7 +8,9 @@
         <el-header>
           <NavHeader @changeFold="handleFoldChange" />
         </el-header>
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>
@@ -18,6 +20,7 @@
 import { defineComponent, ref } from 'vue'
 import NavMenu from '@/components/nav-menu'
 import NavHeader from '@/components/nav-header'
+import { setupStore } from '@/store'
 
 export default defineComponent({
   components: {
@@ -29,6 +32,7 @@ export default defineComponent({
     const handleFoldChange = (isFold: boolean) => {
       isCollapse.value = isFold
     }
+    setupStore()
     return { isCollapse, handleFoldChange }
   }
 })

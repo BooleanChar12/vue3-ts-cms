@@ -21,7 +21,10 @@
             </template>
             <!-- 遍历二级菜单内部的item -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <el-menu-item :index="subitem.id">
+              <el-menu-item
+                :index="subitem.id"
+                @click="handleMenuItemClick(subitem)"
+              >
                 <i v-if="subitem.icon" :class="subitem.icon"></i>
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
@@ -53,32 +56,74 @@
           <el-icon><Monitor /></el-icon>
           <span>系统总览</span>
         </template>
-        <el-menu-item index="1-1">核心技术</el-menu-item>
-        <el-menu-item index="1-2">商品统计</el-menu-item>
+        <el-menu-item
+          index="1-1"
+          @click="handleMenuItemClick({ url: '/main/analysis/dashboard' })"
+          >核心技术</el-menu-item
+        >
+        <el-menu-item
+          index="1-2"
+          @click="handleMenuItemClick({ url: '/main/analysis/overview' })"
+          >商品统计</el-menu-item
+        >
       </el-sub-menu>
       <el-sub-menu index="2">
         <template #title>
           <el-icon><Setting /></el-icon>
           <span>系统管理</span>
         </template>
-        <el-menu-item index="2-1">核心技术</el-menu-item>
-        <el-menu-item index="2-2">商品统计</el-menu-item>
+        <el-menu-item
+          index="2-1"
+          @click="handleMenuItemClick({ url: '/main/system/user' })"
+          >用户管理</el-menu-item
+        >
+        <el-menu-item
+          index="2-2"
+          @click="handleMenuItemClick({ url: '/main/system/department' })"
+          >部门管理</el-menu-item
+        >
+        <el-menu-item
+          index="2-3"
+          @click="handleMenuItemClick({ url: '/main/system/menu' })"
+          >菜单管理</el-menu-item
+        >
+        <el-menu-item
+          index="2-4"
+          @click="handleMenuItemClick({ url: '/main/system/role' })"
+          >角色管理</el-menu-item
+        >
       </el-sub-menu>
       <el-sub-menu index="3">
         <template #title>
           <el-icon><Goods /></el-icon>
           <span>商品中心</span>
         </template>
-        <el-menu-item index="3-1">核心技术</el-menu-item>
-        <el-menu-item index="3-2">商品统计</el-menu-item>
+        <el-menu-item
+          index="3-1"
+          @click="handleMenuItemClick({ url: '/main/product/category' })"
+          >商品类别</el-menu-item
+        >
+        <el-menu-item
+          index="3-2"
+          @click="handleMenuItemClick({ url: '/main/product/goods' })"
+          >商品信息</el-menu-item
+        >
       </el-sub-menu>
       <el-sub-menu index="4">
         <template #title>
           <el-icon><ChatDotRound /></el-icon>
           <span>随便聊聊</span>
         </template>
-        <el-menu-item index="4-1">核心技术</el-menu-item>
-        <el-menu-item index="4-2">商品统计</el-menu-item>
+        <el-menu-item
+          index="4-1"
+          @click="handleMenuItemClick({ url: '/main/story/chat' })"
+          >你的故事</el-menu-item
+        >
+        <el-menu-item
+          index="4-2"
+          @click="handleMenuItemClick({ url: '/main/story/list' })"
+          >故事列表</el-menu-item
+        >
       </el-sub-menu>
     </el-menu>
   </div>
@@ -87,6 +132,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   props: {
@@ -98,7 +144,14 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const userMenus = computed(() => store.state.login.userMenus)
-    return { userMenus }
+
+    const router = useRouter()
+    const handleMenuItemClick = (item: any) => {
+      router.push({
+        path: item.url ?? '/not-found'
+      })
+    }
+    return { userMenus, handleMenuItemClick }
   }
 })
 </script>

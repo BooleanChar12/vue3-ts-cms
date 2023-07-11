@@ -9,7 +9,6 @@ import './assets/css/index.less'
 import { setupStore } from './store'
 // import './service/axios_demo'
 // import bcRequest from './service'
-
 const app = createApp(App)
 app.use(router)
 app.use(store)
@@ -20,7 +19,6 @@ app.mount('#app')
 
 console.log(process.env.VUE_APP_BASE_URL)
 console.log(process.env.VUE_APP_BASE_NAME)
-
 // interface DataType {
 //   data: any
 //   returnCode: string
